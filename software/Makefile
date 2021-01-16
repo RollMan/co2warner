@@ -21,11 +21,11 @@ TARGET = main
 
 CFLAGS = -Wall -nostdinc -nostdlib -fno-builtin -mmcu=$(ARCH_L)
 # CFLAGS += -mint32
-CFLAGS += -I. -I/usr/lib/avr/include
+CFLAGS += -I. -I/usr/local/avr/avr/include
 CFLAGS += -g
 # CFLAGS += -O -s
 
-LDFLAGS = -static -L. -L/usr/lib/avr/lib
+LDFLAGS = -static -L. -L/usr/local/avr/avr/lib
 
 all:			$(TARGET)
 
@@ -35,10 +35,10 @@ $(TARGET):	$(OBJS)
 				$(STRIP) $(TARGET)
 
 %.o: %.c
-				$(CC) -c $(CFLAGS) $<
+				$(CC) -c -o $@ $(CFLAGS) $<
 
-%.o: %.s
-				$(CC) -c $(CFLAGS) $<
+%.o: %.S
+				$(CC) -c -o $@ $(CFLAGS) $<
 
 $(TARGET).hex:	$(TARGET)
 				$(OBJCOPY) -O ihex $^ $@
