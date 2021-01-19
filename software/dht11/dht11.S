@@ -5,6 +5,7 @@
 .text
 .global start_dhc11
 .func start_dhc11
+start_dhc11:
   SBI DDRC-__SFR_OFFSET, PORTC0  ; assert ddrc for pin to output
   SBI PORTC-__SFR_OFFSET, PORTC0 ; assert data pin
 
