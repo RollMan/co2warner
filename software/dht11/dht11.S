@@ -64,7 +64,7 @@ fetch_data:
 
 ; fetch data
   LSL rcvbyte
-  SIBC, PORTC-__SFR_OFFSET, PORT0     ; if input is 0, skip assertion of the lsb.
+  SBIC PORTC-__SFR_OFFSET, PORT0     ; if input is 0, skip assertion of the lsb.
   ORI rcvbyte, 1
 
 ; check if byte is filled.
