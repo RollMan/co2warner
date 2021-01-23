@@ -482,7 +482,6 @@ NoConn ~ 2700 2200
 NoConn ~ 2700 2300
 NoConn ~ 2700 2700
 NoConn ~ 2700 2800
-NoConn ~ 2700 3100
 NoConn ~ 2700 3800
 NoConn ~ 2700 3900
 NoConn ~ 2700 4000
@@ -495,7 +494,12 @@ NoConn ~ 2200 1800
 Connection ~ 9800 2000
 Wire Wire Line
 	9800 2000 10150 2000
-NoConn ~ 6050 4950
 Wire Wire Line
 	10150 1050 10550 1050
+Wire Wire Line
+	6050 4950 4750 4950
+Wire Wire Line
+	4750 4950 4750 3100
+Wire Wire Line
+	4750 3100 2700 3100
 $EndSCHEMATC
