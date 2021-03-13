@@ -15,14 +15,14 @@ STRIP = $(BINDIR)/avr-strip
 
 AVRWRITE = $(BINDIR)/avrdude
 
-OBJS = main.o
+OBJS = main.o dht11/dht11.o
 
 TARGET = main
 
 CFLAGS = -Wall -nostdinc -nostdlib -fno-builtin -mmcu=$(ARCH_L)
 # CFLAGS += -mint32
 CFLAGS += -I. -I/usr/local/avr/avr/include
-CFLAGS += -g
+# CFLAGS += -g
 # CFLAGS += -O -s
 
 LDFLAGS = -static -L. -L/usr/local/avr/avr/lib

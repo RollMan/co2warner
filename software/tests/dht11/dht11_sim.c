@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "simavr/sim_avr.h"
 #include "simavr/sim_cycle_timers.h"
 #include "dht11_sim.h"
@@ -20,7 +21,7 @@ const uint8_t dht11_data[] = {0, 0, 1, 0, 0, 1, 0, 1,
 };
 
 avr_cycle_count_t dht11_timer_handler_data(avr_t *avr, avr_cycle_count_t when, void *param){
-  dht11_t *d = (dht11_t )param;
+  dht11_t *d = (dht11_t *)param;
   if (d->bit_idx == dht11_data_size){
     avr_raise_irq(d->irq + IRQ_DHT11_DATA, LOW);
     return 0;
@@ -37,6 +38,7 @@ avr_cycle_count_t dht11_timer_handler_data(avr_t *avr, avr_cycle_count_t when, v
     avr_cycle_timer_register_usec(d->avr, length, dht11_timer_handler_data, d);
     return 0;
   }
+  return 0;
 }
 
 avr_cycle_count_t dht11_timer_handler(avr_t *avr, avr_cycle_count_t when, void *param){
@@ -44,7 +46,6 @@ avr_cycle_count_t dht11_timer_handler(avr_t *avr, avr_cycle_count_t when, void *
    *
    */
    dht11_t *d = (dht11_t *)param;
-   uint8_t next_state;
    if (d->process_state == DHT11_STATE_RESPONSE_LOW) {
      avr_raise_irq(d->irq + IRQ_DHT11_DATA, LOW);
      d->process_state = DHT11_STATE_RESPONSE_HIGH;
@@ -79,7 +80,6 @@ void dht11_handler(struct avr_irq_t *irq, uint32_t value, void *param){
   if (d->process_state == DHT11_STATE_START && !value){
     d->process_state = DHT11_STATE_PULLED_WAIT;
   }else if (d->process_state == DHT11_STATE_PULLED_WAIT && value){
-    d->process_state = DHT11_STATE_RESPONSE;
     avr_cycle_timer_register_usec(d->avr, STARTSIGNAL_DURATION, dht11_timer_handler, d);
   }
 }

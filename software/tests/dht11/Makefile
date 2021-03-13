@@ -3,18 +3,22 @@ OBJ := $(SRC:%c=%o)
 
 CC := gcc
 CFLAGS := -Wall -g
-LDFLAGS :=
+LDFLAGS := -lsimavr -lsimavrparts -lelf
 
 TARGET := main.out
 
 .PHONY: all
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJ)
 	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) -c -o $@ $(CFLAGS) $<
+
+test_dht11.elf:
+	make -C ../../
+	cp ../../main.elf ./$@
 
 .PHONY: clean
 clean:

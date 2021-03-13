@@ -82,6 +82,7 @@ fetch_data:
   INC idx
   CPI idx, 8
   BRNE datum_byte
+  RJMP main
 .endfunc
 
 .section .bss

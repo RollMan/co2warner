@@ -3,11 +3,12 @@
 #include <libgen.h>
 #include <pthread.h>
 
-#include "sim_avr.h"
-#include "avr_elf.h"
-#include "sim_elf.h"
-#include "sim_gdb.h"
-#include "sim_vcd_file.h"
+#include "simavr/sim_avr.h"
+#include "simavr/sim_elf.h"
+#include "simavr/sim_gdb.h"
+#include "simavr/sim_vcd_file.h"
+#include "simavr/avr_ioport.h"
+#include "dht11_sim.h"
 
 avr_t *avr = NULL;
 avr_vcd_t vcd_file;
