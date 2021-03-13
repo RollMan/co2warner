@@ -25,8 +25,28 @@ int main(int argc, char *argv[]){
   avr_load_firmware(avr, &f);
 
   avr->gdb_port=1234;
-  avr->state - cpu_Stopped;
+  avr->state = cpu_Stopped;
   avr_gdb_init(avr);
   
+
+  dht11_t dht11;
+  dht11_init(avr, &dht11, "dht11");
+
+  // Connect PORTC0 to DHT11 data and vice versa
+  avr_irq_t *iavr = avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('C'), 0);
+  avr_irq_t *idht = dht11.irq + IRQ_DHT11_DATA;
+  avr_connect_irq(iavr, idht);
+  avr_connect_irq(idht, iavr);
+
+  // Waveform configuration
   avr_vcd_init(avr, "gtkwave_output.vcd", &vcd_file, 100000);
+  avr_vcd_add_signal(&vcd_file, avr_io_getirq(avr, AVR_IOCTL_IOPORT_GETIRQ('C'), 0), 1 /* bits */, "PORTC0");
+  avr_vcd_add_signal(&vcd_file, dht11.irq + IRQ_DHT11_DATA, 1, "DHT11_DATA");
+  avr_vcd_start(&vcd_file);
+
+  int state = cpu_Running;
+  while ((state != cpu_Done) && (state != cpu_Crashed)){
+    state = avr_run(avr);
+  }
+  return 0;
 }
