@@ -21,7 +21,7 @@ TARGET = main
 
 CFLAGS = -Wall -nostdinc -nostdlib -fno-builtin -mmcu=$(ARCH_L)
 # CFLAGS += -mint32
-CFLAGS += -I. -I/usr/local/avr/avr/include
+CFLAGS += -I. -I/usr/local/avr/avr/include -I/usr/local/include
 # CFLAGS += -g
 # CFLAGS += -O -s
 

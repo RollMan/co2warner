@@ -1,5 +1,8 @@
 #include <avr/io.h>
 #define SPL 0x3D
+#define F_CPU 1000000UL
+AVR_MCU(F_CPU, "atmega88p");
+
 .text
 .org 0x00
 	rjmp reset
