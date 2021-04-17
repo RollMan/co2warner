@@ -43,6 +43,12 @@ $(TARGET):	$(OBJS)
 $(TARGET).hex:	$(TARGET)
 				$(OBJCOPY) -O ihex $^ $@
 
+main.o: main.S avr_mmcu_section.inc
+				$(CC) -c -o $@ $(CFLAGS) $<
+
+avr_mmcu_section.inc: avr_mmcu_section.c
+	$(CC) -c -S -o $@ $(CFLAGS) $<
+
 .PHONY: image
 image:			$(TARGET).hex
 
