@@ -15,4 +15,4 @@ reset:
 main:
 	rjmp start_dhc11
 
-.include avr_mmcu_section.inc
+.include "avr_mmcu_section.inc"
